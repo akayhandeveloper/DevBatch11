@@ -1,0 +1,5 @@
+Select id, name from Account
+select id, name, project_name__c from Salesforce_Project__c
+select id, name, birthdate from Contact
+select id, name, mailingcity, birthdate from contact where mailingcity = 'Paris'
+
