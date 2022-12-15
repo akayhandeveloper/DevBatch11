@@ -78,7 +78,7 @@ public class DmlDemo {
         listAcc.add(acc3);
 
         insert listAcc;
-        System.debug(listAcc);  
+        //System.debug(listAcc);  
     }
     public static void dmlInsertMultiple_right2() {
         List<account> listAcc = new list<account>();
