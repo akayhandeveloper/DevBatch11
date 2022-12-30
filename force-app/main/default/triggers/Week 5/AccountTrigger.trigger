@@ -1,8 +1,18 @@
-trigger AccountTrigger on Account (before insert, before update, after insert,  after update) {
+trigger AccountTrigger on Account (before insert, before update, after insert, after update) {
     
-    if ( trigger.isBefore) {
+    if (Trigger.isBefore) {
+        system.debug('call updateDescription NOW.');
         AccountTriggerHandler.updateDescription(Trigger.New, Trigger.Old, Trigger.NewMap, Trigger.OldMap);
-        
+        system.debug('Called updateDescription DONE already.');
+    }
+    if (Trigger.isAfter && Trigger.isInsert) {
+        AccountQueueableExample aq = new AccountQueueableExample(trigger.new);
+        id jobId = system.enqueueJob(aq);
+    }
+    if (Trigger.isAfter && Trigger.isUpdate) {
+        //HERE we call handler method to update all contacts VIP field
+        AccountTriggerHandler.updateVIPforContacts(Trigger.New, Trigger.Old, Trigger.NewMap, Trigger.OldMap);
+    }
         /*
         //we move for part to AccounttriggerHandler class.
         for(account eachAcc : trigger.new) {
@@ -33,7 +43,7 @@ trigger AccountTrigger on Account (before insert, before update, after insert,  
             }
         }
         */
-    }
+    
     
     
     /*
